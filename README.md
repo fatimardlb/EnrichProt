@@ -1,4 +1,4 @@
-# ![image](https://user-images.githubusercontent.com/63663530/153719920-5bf86f7b-bfd3-4dcc-90dd-a3a4389991ce.png)
+# <img width="698" alt="Screenshot 2022-02-12 at 18 15 43" src="https://user-images.githubusercontent.com/63663530/153721166-e192850b-f449-4530-8166-dc7faa79790a.png">
 
 An integral pipeline to extract relevant biological information among the vast amount of proteomics data.
 
