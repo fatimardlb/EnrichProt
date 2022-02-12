@@ -38,7 +38,10 @@ The study of the influence of the number of peptides and the fold change can be 
 ![image](https://user-images.githubusercontent.com/63663530/153719183-356ecb98-70fb-442a-b3b6-9c15f8e93e11.png)
 
 
-## <img height="32" width="32" src="https://user-images.githubusercontent.com/63663530/153724044-6418c6de-9f1a-411a-94da-7b8b5f2dfca7.png"> Differential abundance analysis
+## <img width="52" alt="Screenshot 2022-02-12 at 22 24 21" src="https://user-images.githubusercontent.com/63663530/153728996-7908aa06-6e11-4bdb-9bdb-6c56dc96b4f8.png"> Differential abundance analysis
+
+
+
 
 In order to detect changing proteins in the condition of interest, a **Welch's two-sample t-test** followed by a multiple testing correction is performed by **FDR**. A simple **annotation** of proteins using Gene Ontology is also performed.
 
@@ -55,6 +58,57 @@ In order to detect changing proteins in the condition of interest, a **Welch's t
 + Multiple graphics are generated and the same results are also provided for detected proteins with each selected fold change if several values have been chosen.  
 
 <img width="953" alt="Screenshot 2022-02-12 at 20 07 04" src="https://user-images.githubusercontent.com/63663530/153724831-ff3f2619-1cee-44c4-a1db-487dc9fb354d.png">
+
+
+
+## <img width="53" alt="Screenshot 2022-02-12 at 22 23 56" src="https://user-images.githubusercontent.com/63663530/153729035-143eba73-b2ab-4647-9eab-a95e8d7ecd96.png"> Functional profiling 
+
+**Functional profiling methods** allow the interpretation of proteomics data in terms of biological functions, pathways, and protein interactions that are deregulated at a particular cellular condition. This kind of analysis detects statistically over-represented modules of genes or proteins with a functional entity in the complete set of identified elements in case-control experiments or similar approaches. 
+
+Two popular methods are **Over Representation Analysis (ORA)** and **Gene Set Enrichment Analysis (GSEA)**, both using pre-defined sets of genes that share common biological functions or cell locations as modules to test.
+
+
+## <img width="26" alt="Screenshot 2022-02-12 at 22 50 11" src="https://user-images.githubusercontent.com/63663530/153729910-c3d2dc92-5758-4318-bc25-b5c7d7055a94.png"> Functional profiling using ORA
+
+ORA requires a **threshold** that select significantly deregulated proteins compared to the rest of the list of identified proteins (background). The choice of this threshold is often a crucial decision that depends on the number of observations being tested.
+
+### Input:
+
++ EnrichProt receives a file containing identified UniProt IDs (1st column) and a column with the parameter chosen to represent a phenotype variation. 
++ In a case-control experiment, this parameter would be the statistics or the fold change, which can be calculated by EnrichProt in the differential abundance analysis or provided by the user. EnrichProt ranks the dataset according to the chosen parameter.
++ In ORA the **selection of a threshold** to define significantly changing proteins (e.g., fold change) is required. Multiple values of the selected parameter can be chosen in order to perform an analysis on the influence of each value in the obtained information. 
++ The adjusted p-value can be selected to retain, from all enriched categories, those below these values. 
++ Gene sets can be filtered out specifying the minimal and maximal size (number of annotated proteins) to be considered, being 10 and 500 the default ones. 
++ Ontology sets that can be used: GO, KEGG, DisGeNET, Molecular Signatures Database (MSigDB) and The Human Protein Atlas (HPA). 
++ In the case of selecting GO, EnrichProt provides all enriched GO terms and an additional list where redundant terms have been removed, performing the Relevance semantic similarity method in *REVIGO* package and using a small similarity threshold (C=0.5). 
+
+### Output:
+
++ The output consists of significantly enriched functional categories under the selected p-value for each peptide, database and threshold.
++ Several informative figures are generated. 
+
+![image](https://user-images.githubusercontent.com/63663530/153730169-c8983633-4eed-4c97-8ac7-a505c1024b4c.png)
+
+
+## <img width="26" alt="Screenshot 2022-02-12 at 23 02 37" src="https://user-images.githubusercontent.com/63663530/153729915-29ee71e3-7a51-4022-8425-f2220e652bb9.png"> Functional profiling using GSEA
+
+GSEA attempts to measure the coordinated behavior of genes/proteins from a **ranked list** based on a parameter linked to the phenotype we want to describe. GSEA **does not require a threshold** to define significantly abundant proteins like ORA, and uses the distribution of pre-defined gene sets within the ranked list to determine whether that category is up or down-regulated.
+
+### Input:
+
++ EnrichProt receives a file containing identified UniProt IDs (1st column) and a column with the parameter chosen to represent a phenotype variation. 
++ In a case-control experiment, this parameter would be the statistics or the fold change, which can be calculated by EnrichProt in the differential abundance analysis or provided by the user. EnrichProt ranks the dataset according to the chosen parameter.
++ The adjusted p-value can be selected to retain, from all enriched categories, those below these values. 
++ Gene sets can be filtered out specifying the minimal and maximal size (number of annotated proteins) to be considered, being 10 and 500 the default ones. 
++ Ontology sets that can be used: GO, KEGG, DisGeNET, Molecular Signatures Database (MSigDB) and The Human Protein Atlas (HPA). 
++ In the case of selecting GO, EnrichProt provides all enriched GO terms and an additional list where redundant terms have been removed, performing the Relevance semantic similarity method in *REVIGO* package and using a small similarity threshold (C=0.5). 
+
+### Output:
++ The output consists of significantly enriched functional categories under the selected adjusted p-value for each selected peptide and ontology. 
++ Several informative figures are generated. 
+
+![image](https://user-images.githubusercontent.com/63663530/153730090-03b6b4f7-bbec-4f59-acd1-490fea07dd28.png)
+
 
 
 
