@@ -34,6 +34,7 @@ Three types of analysis can be performed using EnrichProt pipeline:
 The study of the influence of the number of peptides and the fold change can be performed automatically selecting several values for each one. The general framework of EnrichProt pipeline is shown below:
 
 
+
 ![image](https://user-images.githubusercontent.com/63663530/153719183-356ecb98-70fb-442a-b3b6-9c15f8e93e11.png)
 
 
@@ -52,6 +53,10 @@ In order to detect changing proteins in the condition of interest, a **Welch's t
 
 + EnrichProt returns the original input matrix where calculated statistical parameters (t-statistic, fold change, p-value and adjusted p-value by FDR) and protein annotations are added. 
 + Multiple graphics are generated and the same results are also provided for detected proteins with each selected fold change if several values have been chosen.  
+
+<img width="953" alt="Screenshot 2022-02-12 at 20 07 04" src="https://user-images.githubusercontent.com/63663530/153724831-ff3f2619-1cee-44c4-a1db-487dc9fb354d.png">
+
+
 
 
 
