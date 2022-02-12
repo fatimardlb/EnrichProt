@@ -27,9 +27,9 @@ In order to elucidate which criteria are the most appropriate for the analysis, 
 
 Three types of analysis can be performed using EnrichProt pipeline: 
 
-1) Differential abundance analysis
-2) Functional profiling using GSEA
-3) Functional profiling using ORA
+1) **Differential abundance analysis**
+2) **Functional profiling using GSEA**
+3) **Functional profiling using ORA**
 
 The study of the influence of the number of peptides and the fold change can be performed automatically selecting several values for each one. The general framework of EnrichProt pipeline is shown below:
 
@@ -41,10 +41,17 @@ The study of the influence of the number of peptides and the fold change can be 
 
 In order to detect changing proteins in the condition of interest, a **Welch's two-sample t-test** followed by a multiple testing correction is performed by **FDR**. A simple **annotation** of proteins using Gene Ontology is also performed.
 
-#### Input 
+### Input:
 
++ EnrichProt receives a file containing identified UniProt IDs (1st column) and the different values for each feature in each of the samples under study. 
++ To study the influence of the number of peptides, a column containing this value is required. 
++ The two groups under study with their column positions are needed together with the threshold values of the parameters to evaluate (p-value, fold change and number of peptides). 
++ The user can choose between calculating the fold change or the log2(fold change).  
 
-EnrichProt receives a file containing identified UniProt IDs (1st column) and the different values for each feature in each of the samples under study. To study the influence of the number of peptides, a column containing this value is required. Likewise, the two groups under study with their column positions are needed together with the threshold values of the parameters to evaluate (p-value, fold change and number of peptides). Additionally, the user can choose between calculating the fold change or the log2(fold change).  Finally, EnrichProt returns the original input matrix where calculated statistical parameters (t-statistic, fold change, p-value and adjusted p-value by FDR) and protein annotations are added (Figure 7). Multiple graphics are also generated (Supplementary Figure 9). The same results are also provided for detected proteins with each selected fold change if several values have been chosen.  
+### Output:
+
++ EnrichProt returns the original input matrix where calculated statistical parameters (t-statistic, fold change, p-value and adjusted p-value by FDR) and protein annotations are added. 
++ Multiple graphics are generated and the same results are also provided for detected proteins with each selected fold change if several values have been chosen.  
 
 
 
