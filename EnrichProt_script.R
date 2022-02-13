@@ -2,31 +2,20 @@
 # Required libraries
 ################################################################################
 
-#library(gprofiler2)
 library(clusterProfiler)
 library(ggnewscale)
 library(enrichplot)
-#library(biomaRt)
 library(ggplot2)
-#library(pathview)
 library(DOSE)
-#library(prodlim)
 library(splitstackshape)
 library(dplyr)
 library(org.Hs.eg.db) # Genome wide annotation for Human
 library(genefilter)
-#library(qvalue)
 library(reshape2)
-
-#library(devtools)
-#install_github('saezlab/OmnipathR')
-#library(OmnipathR)
-
 library(msigdbr)
 library(hpar) # The Human Protein Atlas
 library(ggridges)
 library(ggupset)
-#library(scales)
 library(plotly)
 library(forcats)
 library(stringr)
@@ -34,16 +23,18 @@ library(UniprotR) # Connect to Uniprot to retrieve information about proteins
 library(ggpubr)
 library(pdp)
 library(gridExtra)
-#library(magick)
-library(fingerprint)
 
 
 ################################################################################
 # Functions
 ################################################################################
 
-# upload.data.function
+
 ################################################################################
+# Function 1: upload.data.function 
+#             upload the proteomics matrix under study
+################################################################################
+
 upload.data.function <- function(data, 
                                  header = TRUE, 
                                  sep = "\t",
@@ -64,10 +55,11 @@ upload.data.function <- function(data,
 }
 
 
-
-# convert.ids.function
 ################################################################################
-# We use `bitr` function which is a Biological Id TRanslator. 
+# Function 2: convert.ids.function
+#             Biological Id TRanslator using `bitr` 
+################################################################################
+
 # First column needs to be the id.
 convert.ids.function <- function(data, 
                                  fromType, 
@@ -81,7 +73,7 @@ convert.ids.function <- function(data,
                               OrgDb = OrgDb, 
                               drop = TRUE) # drop NAs
   
-  # Merge the data and the created dictionary by "fromType" common column 
+  # Merge the data and the created dictionary by "fromType" common column:
   entrez_uniprot_expression <- merge(entrez_uniprot_dict, 
                                      data, 
                                      by.x = colnames(entrez_uniprot_dict[1]), 
@@ -89,7 +81,7 @@ convert.ids.function <- function(data,
                                      all=TRUE) 
   
   # Retain all columns except "fromType" so we just have the entrez id relative
-  # abundances and remove those ids not translated
+  # abundances and remove those ids not translated:
   entrez_expression <- entrez_uniprot_expression[, !names(entrez_uniprot_expression) 
                                                  %in% fromType] 
   entrez_expression <- entrez_expression[!is.na(entrez_expression[[toType]]),]
@@ -104,11 +96,12 @@ convert.ids.function <- function(data,
 }
 
 
-# peptides function
+################################################################################
+# Function 3: peptide.function
+#             returns a list containing all expression dataframes made up of
+#             detected proteins (ENTREZ) depending on the number of peptides
 ################################################################################
 
-# peptide.function returns a list containing all expression dataframes made up of
-# proteins detected depending on the number of peptides.
 peptide.function <- function(entrez_expression, 
                              peptides = seq(1:5), 
                              Np.col) {
@@ -197,7 +190,10 @@ peptide.function <- function(entrez_expression,
 }
 
 
-# uniprot peptide function
+################################################################################
+# Function 4: uniprot.peptide.function
+#             returns a list containing all expression dataframes made up of
+#             detected proteins (UniProt) depending on the number of peptides
 ################################################################################
 
 uniprot.peptide.function <- function(data, 
@@ -274,7 +270,11 @@ uniprot.peptide.function <- function(data,
 }
 
 
-# Welch two sample t-test function
+################################################################################
+# Function 5: t.test.function
+#             performs a differential abundance analysis using a 
+#             Welch two sample t-test function followed by a FDR
+#             multiple testing correction
 ################################################################################
 
 t.test.function <- function(entrez_expression, 
@@ -326,8 +326,10 @@ t.test.function <- function(entrez_expression,
 }
 
 
-
-# Gene Set Enrichment Analysis (GSEA) function
+################################################################################
+# Function 6: gsea.function
+#             performs a functional profiling using a Gene Set Enrichment 
+#             Analysis (GSEA)
 ################################################################################
 
 gsea.function <- function(entrez_expression, 
@@ -602,8 +604,10 @@ gsea.function <- function(entrez_expression,
 }
 
 
-
-# Over Representation Analysis (ORA) function
+################################################################################
+# Function 7: ora.function
+#             performs a functional profiling using an Over Representation 
+#             Analysis (ORA)  
 ################################################################################
 
 ora.function <- function(entrez_expression, 
@@ -1021,8 +1025,9 @@ ora.function <- function(entrez_expression,
 
 
 
-
-# Line plot function
+################################################################################
+# Function 8: line.plot.function
+#             performs several types of plots needed in the main function  
 ################################################################################
 
 line.plot.function <- function(data, x, y = NULL, z = NULL,
@@ -1093,9 +1098,10 @@ line.plot.function <- function(data, x, y = NULL, z = NULL,
 }
 
 
-
-
-# Modify PlotGoInfo UniprotR functions
+################################################################################
+# Function 9: PlotGoAnnotations
+#             performs a barplot with the main GO annotations for each 
+#             module (biological process, molecular function, cellular component)
 ################################################################################
 
 PlotGoAnnotations <- function(GOObj, 
@@ -1173,11 +1179,14 @@ PlotGoAnnotations <- function(GOObj,
 }
 
 
-
-# Core enrichment translation from ENTREZ to UNIPROT
+################################################################################
+# Function 10: core.enrichment.translation
+#              translate ENTREZ gene sets of the resulting enriched categories
+#              to UnipProt IDs
 ################################################################################
 
-core.enrichment.translation <- function(data, col.name = "core_enrichment") {
+core.enrichment.translation <- function(data, 
+                                        col.name = "core_enrichment") {
   
   core.enriched.entrez <- lapply(data[[col.name]], function (x) strsplit(x,
                                                                          split='/', 
@@ -1203,7 +1212,12 @@ core.enrichment.translation <- function(data, col.name = "core_enrichment") {
 
 
 
-# Main function
+################################################################################
+# Function 11: main.function
+#              EnrichProt main function. Performs the whole analysis:
+#                 A. Differential abundance analysis
+#                 B. Funcional profiling using GSEA
+#                 C. Functional profiling using ORA
 ################################################################################
 
 main.function <- function(data,
@@ -1244,9 +1258,9 @@ main.function <- function(data,
                           showCategory.plots = 10) {
   
   
-  ###################################
+  ######################################
   # 1: Create EnrichProt results folder
-  ###################################
+  ######################################
   
   date <- str_replace_all(Sys.Date(), "-", ".")
   dir.create(file.path(output.dir, paste0(date, "_EnrichProt.results")), showWarnings = FALSE)
