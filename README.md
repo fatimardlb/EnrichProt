@@ -13,7 +13,7 @@ The two main parameters that can be evaluated are:
 
 ### Fold change
 
-The first paraemter EnrichProt can evaluated is the fold change, used as a threshold to detect significantly altered proteins in a condition of study compared to a control. It gives information about the degree of change between the two conditions or biological classes under study. However, determining the optimum value is often complicated as it will depend on each experiment. Too strict or too relaxed fold change values would lead to misleading outcomes. 
+The first parameter EnrichProt can evaluated is the fold change, used as a threshold to detect significantly altered proteins in a condition of study compared to a control. It gives information about the degree of change between the two conditions or biological classes under study. However, determining the optimum value is often complicated as it will depend on each experiment. Too strict or too relaxed fold change values would lead to misleading outcomes. 
 
 ### Number of peptides 
 
