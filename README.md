@@ -1,6 +1,6 @@
 <img width="600" alt="Screenshot 2022-02-12 at 18 15 43" src="https://user-images.githubusercontent.com/63663530/153721166-e192850b-f449-4530-8166-dc7faa79790a.png">
 
-
+Developed during my academic internship at Instituto de Investigación Sanitaria fundación Jiménez Díaz under the tutelage of Dr Pablo Mínguez Paniagua and Dra Gloria Álvarez-Llamas
 
 # What is EnrichProt? 
 
